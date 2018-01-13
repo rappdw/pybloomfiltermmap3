@@ -1,19 +1,8 @@
 import os
 import sys
+import versioneer
 
 from setuptools import setup, Extension
-
-try:
-  from Cython.Distutils import build_ext
-except ImportError:
-  print("""Cannot find Cython!
-  Cython is required to correctly build pyBloomFilter's C extensions.
-  In most cases, running the following command should be sufficient:
-    $ pip install Cython
-
-  Exception: ImportError
-  """)
-  exit()
 
 here = os.path.dirname(__file__)
 
@@ -37,7 +26,7 @@ if sys.version_info[0] < 3:
 
 setup(
   name='pybloomfiltermmap3',
-  version="0.4.15",
+  version=versioneer.get_version(),
   author="Michael Axiak, Rob Stacey, Prashant Sinha",
   author_email="prashant@ducic.ac.in",
   url="https://github.com/PrashntS/pybloomfiltermmap3",
@@ -57,5 +46,10 @@ setup(
     'Programming Language :: Python :: 3',
     'Topic :: Software Development :: Libraries :: Python Modules',
   ],
-  cmdclass={'build_ext': build_ext}
+  setup_requires=[
+        # Setuptools 18.0 properly handles Cython extensions.
+        'setuptools>=18.0',
+        'cython',
+  ],
+  cmdclass=versioneer.get_cmdclass()
 )

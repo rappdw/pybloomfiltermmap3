@@ -4,3 +4,5 @@ include AUTHORS
 include README.markdown
 recursive-include src *
 recursive-include tests *
+include versioneer.py
+include pybloomfiltermmap3/_version.py
